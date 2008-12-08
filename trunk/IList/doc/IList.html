@@ -1,0 +1,206 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="Up" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="IList" rel="Chapter" href="IList.html"><link title="The basic types and exceptions " rel="Section" href="#3_Thebasictypesandexceptions">
+<link title="'Empty' Functions" rel="Section" href="#3_EmptyFunctions">
+<link title="Basic O(1) Functions" rel="Section" href="#3_BasicO1Functions">
+<link title="N-th element accessors" rel="Section" href="#3_Nthelementaccessors">
+<link title="Other Functions" rel="Section" href="#3_OtherFunctions">
+<link title="Removing elements" rel="Section" href="#3_Removingelements">
+<link title="Searching functions" rel="Section" href="#3_Searchingfunctions">
+<link title="The 'Unsafe' submodule" rel="Section" href="#3_TheUnsafesubmodule">
+<link title="Semantic renaming modules" rel="Section" href="#3_Semanticrenamingmodules">
+<title>IList</title>
+</head>
+<body>
+<div class="navbar">&nbsp;<a href="index.html">Up</a>
+&nbsp;</div>
+<center><h1>Module <a href="type_IList.html">IList</a></h1></center>
+<br>
+<pre><span class="keyword">module</span> IList: <code class="code">sig</code> <a href="IList.html">..</a> <code class="code">end</code></pre>An imperative circular list with many <em>O(1)</em> operations<br>
+<b>Author(s):</b> Sebastien Mondet (sebmdt.googlepages.com)<br>
+<hr width="100%">
+<br>
+Features:<ul>
+<li>no <code class="code">Obj.magic</code>, no <code class="code">==</code> and no <code class="code">!=</code> (except in the <code class="code">Unsafe</code> submodule)</li>
+<li>many <em>O(1)</em> operations: <code class="code">length</code>, <code class="code">add_head</code>, <code class="code">add_last</code>, <code class="code">see_head</code>, <code class="code">see_last</code>, <code class="code">take_head</code>, <code class="code">append</code>...</li>
+<li>memory usage overhead (compared to OCaml list): 7 values (i.e. 7 x (4 or 8) bytes)</li>
+</ul>
+
+Warning:<ul>
+<li>Do not use structural equality on lists (<code class="code">(=)</code> or <code class="code">compare</code>) it may infinitely loop</li>
+</ul>
+<br>
+<br>
+<a name="3_Thebasictypesandexceptions"></a>
+<h3>The basic types and exceptions </h3><br>
+<pre><span class="keyword">type</span> <a name="TYPEiList"></a><code class="type">'a</code> iList </pre>
+<div class="info">
+The imperative circular list type<br>
+</div>
+
+<pre><span class="keyword">type</span> <a name="TYPEreturn"></a><code class="type">('a, 'b)</code> return = <code class="type">[ `other of 'b | `value of 'a ]</code> </pre>
+<div class="info">
+The returned type of non-unit functions<br>
+</div>
+
+<pre><span class="keyword">val</span> <a name="VALget_return_value"></a>get_return_value : <code class="type">('a, 'b) <a href="IList.html#TYPEreturn">return</a> -> 'a</code></pre><div class="info">
+Get the return value or raise a Failure exception<br>
+</div>
+<pre><span class="keyword">exception</span> <a name="EXCEPTIONError"></a>Error <span class="keyword">of</span> <code class="type">[ `empty | `index_out_of_bounds ]</code></pre>
+<div class="info">
+The exception raised by *_exn functions<br>
+</div>
+<br>
+<a name="3_EmptyFunctions"></a>
+<h3>'Empty' Functions</h3><br>
+<pre><span class="keyword">val</span> <a name="VALempty"></a>empty : <code class="type">unit -> 'a <a href="IList.html#TYPEiList">iList</a></code></pre><div class="info">
+Create a new empty list<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALis_empty"></a>is_empty : <code class="type">'a <a href="IList.html#TYPEiList">iList</a> -> bool</code></pre><div class="info">
+Check the list for emptyness<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALto_empty"></a>to_empty : <code class="type">'a <a href="IList.html#TYPEiList">iList</a> -> unit</code></pre><div class="info">
+Make the list empty<br>
+</div>
+<br>
+<a name="3_BasicO1Functions"></a>
+<h3>Basic <em>O(1)</em> Functions</h3><br>
+<pre><span class="keyword">val</span> <a name="VALlength"></a>length : <code class="type">'a <a href="IList.html#TYPEiList">iList</a> -> int</code></pre><div class="info">
+Get the length of the list (<em>O(1)</em>)<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALadd_head"></a>add_head : <code class="type">'a <a href="IList.html#TYPEiList">iList</a> -> 'a -> unit</code></pre><div class="info">
+Add an element at the head of the list (<em>O(1)</em>)<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALadd_last"></a>add_last : <code class="type">'a <a href="IList.html#TYPEiList">iList</a> -> 'a -> unit</code></pre><div class="info">
+Add an element at the end of the list (<em>O(1)</em>)<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALsee_head"></a>see_head : <code class="type">'a <a href="IList.html#TYPEiList">iList</a> -> ('a, [ `empty ]) <a href="IList.html#TYPEreturn">return</a></code></pre><div class="info">
+Get the element at the head of the list (<em>O(1)</em>)<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALsee_head_exn"></a>see_head_exn : <code class="type">'a <a href="IList.html#TYPEiList">iList</a> -> 'a</code></pre><div class="info">
+Same as <code class="code">see_head</code> but can raise <code class="code">Error `empty</code><br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALsee_last"></a>see_last : <code class="type">'a <a href="IList.html#TYPEiList">iList</a> -> ('a, [ `empty ]) <a href="IList.html#TYPEreturn">return</a></code></pre><div class="info">
+Get the element at the end of the list (<em>O(1)</em>)<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALsee_last_exn"></a>see_last_exn : <code class="type">'a <a href="IList.html#TYPEiList">iList</a> -> 'a</code></pre><div class="info">
+Same as <code class="code">see_last</code> but can raise <code class="code">Error `empty</code><br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALtake_head"></a>take_head : <code class="type">'a <a href="IList.html#TYPEiList">iList</a> -> ('a, [ `empty ]) <a href="IList.html#TYPEreturn">return</a></code></pre><div class="info">
+Remove (and get) the element at the head of the list (<em>O(1)</em>)<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALtake_head_exn"></a>take_head_exn : <code class="type">'a <a href="IList.html#TYPEiList">iList</a> -> 'a</code></pre><div class="info">
+Same as <code class="code">take_head</code> but can raise <code class="code">Error `empty</code><br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALappend"></a>append : <code class="type">'a <a href="IList.html#TYPEiList">iList</a> -> 'a <a href="IList.html#TYPEiList">iList</a> -> unit</code></pre><div class="info">
+<code class="code">append l1 l2</code> Adds the content of l2 at the end of l1 and empties l2 (<em>O(1)</em>)<br>
+</div>
+<br>
+<a name="3_Nthelementaccessors"></a>
+<h3>N-th element accessors</h3><br>
+<pre><span class="keyword">val</span> <a name="VALget_nth"></a>get_nth : <code class="type">'a <a href="IList.html#TYPEiList">iList</a> -> int -> ('a, [ `index_out_of_bounds ]) <a href="IList.html#TYPEreturn">return</a></code></pre><div class="info">
+Get the n-th element of the list (<em>O(n)</em>)<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALget_nth_exn"></a>get_nth_exn : <code class="type">'a <a href="IList.html#TYPEiList">iList</a> -> int -> 'a</code></pre><div class="info">
+Same as <code class="code">get_nth</code> but can raise <code class="code">(Error `index_out_of_bounds)</code><br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALset_nth"></a>set_nth : <code class="type">'a <a href="IList.html#TYPEiList">iList</a> -> int -> 'a -> (unit, [ `index_out_of_bounds ]) <a href="IList.html#TYPEreturn">return</a></code></pre><div class="info">
+Modify the n-th element of the list (<em>O(n)</em>)<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALset_nth_exn"></a>set_nth_exn : <code class="type">'a <a href="IList.html#TYPEiList">iList</a> -> int -> 'a -> unit</code></pre><div class="info">
+Same as <code class="code">set_nth</code> but can raise <code class="code">(Error `index_out_of_bounds)</code><br>
+</div>
+<br>
+<a name="3_OtherFunctions"></a>
+<h3>Other Functions</h3><br>
+<pre><span class="keyword">val</span> <a name="VALiter"></a>iter : <code class="type">'a <a href="IList.html#TYPEiList">iList</a> -> f:('a -> unit) -> unit</code></pre><div class="info">
+The "classic" iteration function<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALtransform"></a>transform : <code class="type">'a <a href="IList.html#TYPEiList">iList</a> -> f:('a -> 'a) -> unit</code></pre><div class="info">
+Iter and transform the list contents<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALmap"></a>map : <code class="type">'a <a href="IList.html#TYPEiList">iList</a> -> f:('a -> 'b) -> 'b <a href="IList.html#TYPEiList">iList</a></code></pre><div class="info">
+Create a new list with a function<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALcopy"></a>copy : <code class="type">'a <a href="IList.html#TYPEiList">iList</a> -> 'a <a href="IList.html#TYPEiList">iList</a></code></pre><div class="info">
+Copy the list (<em>O(length l)</em>)<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALequals"></a>equals : <code class="type">?cmp:('a -> 'a -> bool) -> 'a <a href="IList.html#TYPEiList">iList</a> -> 'a <a href="IList.html#TYPEiList">iList</a> -> bool</code></pre><div class="info">
+Test the equality between two lists (worst case = "true": <em>O(length l)</em>))<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALmap_of_list"></a>map_of_list : <code class="type">'a list -> f:('a -> 'b) -> 'b <a href="IList.html#TYPEiList">iList</a></code></pre><div class="info">
+<code class="code">map_of_list l f</code> Applies f to all elements of l creating a new iList<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALmap_to_list_rev"></a>map_to_list_rev : <code class="type">'a <a href="IList.html#TYPEiList">iList</a> -> f:('a -> 'b) -> 'b list</code></pre><div class="info">
+<code class="code">map_to_list_rev l f</code> Applies f to all elements of l creating a new List.t
+ (inversed order)<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALmap_to_list"></a>map_to_list : <code class="type">'a <a href="IList.html#TYPEiList">iList</a> -> f:('a -> 'b) -> 'b list</code></pre><div class="info">
+<code class="code">map_to_list l f</code> Applies f to all elements of l creating a new List.t
+(there's a call to <code class="code">List.rev</code> =&gt; <em>O(2n)</em>)<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALcopy_rev"></a>copy_rev : <code class="type">'a <a href="IList.html#TYPEiList">iList</a> -> 'a <a href="IList.html#TYPEiList">iList</a></code></pre><div class="info">
+Builds a new iList in reverse order<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALreverse"></a>reverse : <code class="type">'a <a href="IList.html#TYPEiList">iList</a> -> unit</code></pre><div class="info">
+Imperatively reverses its operand (<em>O(n)</em>)<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALof_list"></a>of_list : <code class="type">'a list -> 'a <a href="IList.html#TYPEiList">iList</a></code></pre><div class="info">
+Build an iList from a list<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALto_list"></a>to_list : <code class="type">'a <a href="IList.html#TYPEiList">iList</a> -> 'a list</code></pre><div class="info">
+Render an iList to a list (uses <code class="code">List.rev</code> =&gt; <em>O(2n)</em>)<br>
+</div>
+<br>
+<a name="3_Removingelements"></a>
+<h3>Removing elements</h3><br>
+<pre><span class="keyword">val</span> <a name="VALremove_nth"></a>remove_nth : <code class="type">'a <a href="IList.html#TYPEiList">iList</a> -> int -> ('a, [ `index_out_of_bounds ]) <a href="IList.html#TYPEreturn">return</a></code></pre><div class="info">
+Removes and returns the n-th element of the list<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALremove_if"></a>remove_if : <code class="type">'a <a href="IList.html#TYPEiList">iList</a> -> f:('a -> bool) -> unit</code></pre><div class="info">
+Removes the first element that satisfies <code class="code">f e = true</code><br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALfilter"></a>filter : <code class="type">'a <a href="IList.html#TYPEiList">iList</a> -> f:('a -> bool) -> unit</code></pre><div class="info">
+Removes all the elements that do not satisfy <code class="code">f e = true</code><br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALremove_while"></a>remove_while : <code class="type">'a <a href="IList.html#TYPEiList">iList</a> -> f:('a -> bool) -> unit</code></pre><div class="info">
+Removes all the elements that satisfy <code class="code">f e = true</code><br>
+</div>
+<br>
+<a name="3_Searchingfunctions"></a>
+<h3>Searching functions</h3><br>
+<pre><span class="keyword">val</span> <a name="VALfind"></a>find : <code class="type">'a <a href="IList.html#TYPEiList">iList</a> -> f:('a -> bool) -> 'a option</code></pre><div class="info">
+<code class="code">(find l f)</code> finds the first element of the list satisfying f
+(returns <code class="code">None</code> if not found)<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALfind_all"></a>find_all : <code class="type">'a <a href="IList.html#TYPEiList">iList</a> -> f:('a -> bool) -> 'a <a href="IList.html#TYPEiList">iList</a></code></pre><div class="info">
+Returns a new iList containing all elements which satisfy <code class="code">f</code><br>
+</div>
+<br>
+<a name="3_TheUnsafesubmodule"></a>
+<h3>The 'Unsafe' submodule</h3><br>
+<pre><span class="keyword">module</span> <a href="IList.Unsafe.html">Unsafe</a>: <code class="code">sig</code> <a href="IList.Unsafe.html">..</a> <code class="code">end</code></pre><div class="info">
+Unsafe functions (but which can be faster)
+</div>
+<br>
+<a name="3_Semanticrenamingmodules"></a>
+<h3>Semantic renaming modules</h3><br>
+<br>
+They provide some <code class="code">*_exn</code> functions with names:
+<code class="code">create</code>, <code class="code">push</code>, <code class="code">pop</code>, <code class="code">peek</code>, <code class="code">is_empty</code><br>
+<pre><span class="keyword">module</span> <a href="IList.LIFO.html">LIFO</a>: <code class="code">sig</code> <a href="IList.LIFO.html">..</a> <code class="code">end</code></pre><div class="info">
+The Stack (<code class="code">push</code> is <code class="code">add_head</code>)
+</div>
+<pre><span class="keyword">module</span> <a href="IList.FIFO.html">FIFO</a>: <code class="code">sig</code> <a href="IList.FIFO.html">..</a> <code class="code">end</code></pre><div class="info">
+The Queue (<code class="code">push</code> is <code class="code">add_last</code>)
+</div>
+</body></html>

@@ -1,0 +1,239 @@
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="IList" rel="Chapter" href="IList.html"><title>Index of values</title>
+</head>
+<body>
+<center><h1>Index of values</h1></center>
+<table>
+<tr><td align="left"><br>A</td></tr>
+<tr><td><a href="IList.html#VALadd_head">add_head</a> [<a href="IList.html">IList</a>]</td>
+<td><div class="info">
+Add an element at the head of the list (<em>O(1)</em>)
+</div>
+</td></tr>
+<tr><td><a href="IList.html#VALadd_last">add_last</a> [<a href="IList.html">IList</a>]</td>
+<td><div class="info">
+Add an element at the end of the list (<em>O(1)</em>)
+</div>
+</td></tr>
+<tr><td><a href="IList.html#VALappend">append</a> [<a href="IList.html">IList</a>]</td>
+<td><div class="info">
+<code class="code">append l1 l2</code> Adds the content of l2 at the end of l1 and empties l2 (<em>O(1)</em>)
+</div>
+</td></tr>
+<tr><td align="left"><br>C</td></tr>
+<tr><td><a href="IList.Unsafe.html#VALconvert_to_list">convert_to_list</a> [<a href="IList.Unsafe.html">IList.Unsafe</a>]</td>
+<td><div class="info">
+Convert to a classic list, and empty the original
+     (it uses <code class="code">Obj.magic</code> but it's <em>O(1)</em>)
+</div>
+</td></tr>
+<tr><td><a href="IList.html#VALcopy">copy</a> [<a href="IList.html">IList</a>]</td>
+<td><div class="info">
+Copy the list (<em>O(length l)</em>)
+</div>
+</td></tr>
+<tr><td><a href="IList.html#VALcopy_rev">copy_rev</a> [<a href="IList.html">IList</a>]</td>
+<td><div class="info">
+Builds a new iList in reverse order
+</div>
+</td></tr>
+<tr><td><a href="IList.FIFO.html#VALcreate">create</a> [<a href="IList.FIFO.html">IList.FIFO</a>]</td>
+<td></td></tr>
+<tr><td><a href="IList.LIFO.html#VALcreate">create</a> [<a href="IList.LIFO.html">IList.LIFO</a>]</td>
+<td></td></tr>
+<tr><td align="left"><br>E</td></tr>
+<tr><td><a href="IList.html#VALempty">empty</a> [<a href="IList.html">IList</a>]</td>
+<td><div class="info">
+Create a new empty list
+</div>
+</td></tr>
+<tr><td><a href="IList.html#VALequals">equals</a> [<a href="IList.html">IList</a>]</td>
+<td><div class="info">
+Test the equality between two lists (worst case = "true": <em>O(length l)</em>))
+</div>
+</td></tr>
+<tr><td align="left"><br>F</td></tr>
+<tr><td><a href="IList.html#VALfilter">filter</a> [<a href="IList.html">IList</a>]</td>
+<td><div class="info">
+Removes all the elements that do not satisfy <code class="code">f e = true</code>
+</div>
+</td></tr>
+<tr><td><a href="IList.html#VALfind">find</a> [<a href="IList.html">IList</a>]</td>
+<td><div class="info">
+<code class="code">(find l f)</code> finds the first element of the list satisfying f
+(returns <code class="code">None</code> if not found)
+</div>
+</td></tr>
+<tr><td><a href="IList.html#VALfind_all">find_all</a> [<a href="IList.html">IList</a>]</td>
+<td><div class="info">
+Returns a new iList containing all elements which satisfy <code class="code">f</code>
+</div>
+</td></tr>
+<tr><td align="left"><br>G</td></tr>
+<tr><td><a href="IList.html#VALget_nth">get_nth</a> [<a href="IList.html">IList</a>]</td>
+<td><div class="info">
+Get the n-th element of the list (<em>O(n)</em>)
+</div>
+</td></tr>
+<tr><td><a href="IList.html#VALget_nth_exn">get_nth_exn</a> [<a href="IList.html">IList</a>]</td>
+<td><div class="info">
+Same as <code class="code">get_nth</code> but can raise <code class="code">(Error `index_out_of_bounds)</code>
+</div>
+</td></tr>
+<tr><td><a href="IList.html#VALget_return_value">get_return_value</a> [<a href="IList.html">IList</a>]</td>
+<td><div class="info">
+Get the return value or raise a Failure exception
+</div>
+</td></tr>
+<tr><td align="left"><br>I</td></tr>
+<tr><td><a href="IList.FIFO.html#VALis_empty">is_empty</a> [<a href="IList.FIFO.html">IList.FIFO</a>]</td>
+<td></td></tr>
+<tr><td><a href="IList.LIFO.html#VALis_empty">is_empty</a> [<a href="IList.LIFO.html">IList.LIFO</a>]</td>
+<td></td></tr>
+<tr><td><a href="IList.html#VALis_empty">is_empty</a> [<a href="IList.html">IList</a>]</td>
+<td><div class="info">
+Check the list for emptyness
+</div>
+</td></tr>
+<tr><td><a href="IList.html#VALiter">iter</a> [<a href="IList.html">IList</a>]</td>
+<td><div class="info">
+The "classic" iteration function
+</div>
+</td></tr>
+<tr><td align="left"><br>L</td></tr>
+<tr><td><a href="IList.html#VALlength">length</a> [<a href="IList.html">IList</a>]</td>
+<td><div class="info">
+Get the length of the list (<em>O(1)</em>)
+</div>
+</td></tr>
+<tr><td align="left"><br>M</td></tr>
+<tr><td><a href="IList.html#VALmap">map</a> [<a href="IList.html">IList</a>]</td>
+<td><div class="info">
+Create a new list with a function
+</div>
+</td></tr>
+<tr><td><a href="IList.html#VALmap_of_list">map_of_list</a> [<a href="IList.html">IList</a>]</td>
+<td><div class="info">
+<code class="code">map_of_list l f</code> Applies f to all elements of l creating a new iList
+</div>
+</td></tr>
+<tr><td><a href="IList.html#VALmap_to_list">map_to_list</a> [<a href="IList.html">IList</a>]</td>
+<td><div class="info">
+<code class="code">map_to_list l f</code> Applies f to all elements of l creating a new List.t
+(there's a call to <code class="code">List.rev</code> =&gt; <em>O(2n)</em>)
+</div>
+</td></tr>
+<tr><td><a href="IList.html#VALmap_to_list_rev">map_to_list_rev</a> [<a href="IList.html">IList</a>]</td>
+<td><div class="info">
+<code class="code">map_to_list_rev l f</code> Applies f to all elements of l creating a new List.t
+ (inversed order)
+</div>
+</td></tr>
+<tr><td align="left"><br>O</td></tr>
+<tr><td><a href="IList.html#VALof_list">of_list</a> [<a href="IList.html">IList</a>]</td>
+<td><div class="info">
+Build an iList from a list
+</div>
+</td></tr>
+<tr><td align="left"><br>P</td></tr>
+<tr><td><a href="IList.FIFO.html#VALpeek">peek</a> [<a href="IList.FIFO.html">IList.FIFO</a>]</td>
+<td></td></tr>
+<tr><td><a href="IList.LIFO.html#VALpeek">peek</a> [<a href="IList.LIFO.html">IList.LIFO</a>]</td>
+<td></td></tr>
+<tr><td><a href="IList.FIFO.html#VALpop">pop</a> [<a href="IList.FIFO.html">IList.FIFO</a>]</td>
+<td></td></tr>
+<tr><td><a href="IList.LIFO.html#VALpop">pop</a> [<a href="IList.LIFO.html">IList.LIFO</a>]</td>
+<td></td></tr>
+<tr><td><a href="IList.FIFO.html#VALpush">push</a> [<a href="IList.FIFO.html">IList.FIFO</a>]</td>
+<td></td></tr>
+<tr><td><a href="IList.LIFO.html#VALpush">push</a> [<a href="IList.LIFO.html">IList.LIFO</a>]</td>
+<td></td></tr>
+<tr><td align="left"><br>R</td></tr>
+<tr><td><a href="IList.html#VALremove_if">remove_if</a> [<a href="IList.html">IList</a>]</td>
+<td><div class="info">
+Removes the first element that satisfies <code class="code">f e = true</code>
+</div>
+</td></tr>
+<tr><td><a href="IList.html#VALremove_nth">remove_nth</a> [<a href="IList.html">IList</a>]</td>
+<td><div class="info">
+Removes and returns the n-th element of the list
+</div>
+</td></tr>
+<tr><td><a href="IList.html#VALremove_while">remove_while</a> [<a href="IList.html">IList</a>]</td>
+<td><div class="info">
+Removes all the elements that satisfy <code class="code">f e = true</code>
+</div>
+</td></tr>
+<tr><td><a href="IList.html#VALreverse">reverse</a> [<a href="IList.html">IList</a>]</td>
+<td><div class="info">
+Imperatively reverses its operand (<em>O(n)</em>)
+</div>
+</td></tr>
+<tr><td align="left"><br>S</td></tr>
+<tr><td><a href="IList.html#VALsee_head">see_head</a> [<a href="IList.html">IList</a>]</td>
+<td><div class="info">
+Get the element at the head of the list (<em>O(1)</em>)
+</div>
+</td></tr>
+<tr><td><a href="IList.html#VALsee_head_exn">see_head_exn</a> [<a href="IList.html">IList</a>]</td>
+<td><div class="info">
+Same as <code class="code">see_head</code> but can raise <code class="code">Error `empty</code>
+</div>
+</td></tr>
+<tr><td><a href="IList.html#VALsee_last">see_last</a> [<a href="IList.html">IList</a>]</td>
+<td><div class="info">
+Get the element at the end of the list (<em>O(1)</em>)
+</div>
+</td></tr>
+<tr><td><a href="IList.html#VALsee_last_exn">see_last_exn</a> [<a href="IList.html">IList</a>]</td>
+<td><div class="info">
+Same as <code class="code">see_last</code> but can raise <code class="code">Error `empty</code>
+</div>
+</td></tr>
+<tr><td><a href="IList.html#VALset_nth">set_nth</a> [<a href="IList.html">IList</a>]</td>
+<td><div class="info">
+Modify the n-th element of the list (<em>O(n)</em>)
+</div>
+</td></tr>
+<tr><td><a href="IList.html#VALset_nth_exn">set_nth_exn</a> [<a href="IList.html">IList</a>]</td>
+<td><div class="info">
+Same as <code class="code">set_nth</code> but can raise <code class="code">(Error `index_out_of_bounds)</code>
+</div>
+</td></tr>
+<tr><td align="left"><br>T</td></tr>
+<tr><td><a href="IList.html#VALtake_head">take_head</a> [<a href="IList.html">IList</a>]</td>
+<td><div class="info">
+Remove (and get) the element at the head of the list (<em>O(1)</em>)
+</div>
+</td></tr>
+<tr><td><a href="IList.html#VALtake_head_exn">take_head_exn</a> [<a href="IList.html">IList</a>]</td>
+<td><div class="info">
+Same as <code class="code">take_head</code> but can raise <code class="code">Error `empty</code>
+</div>
+</td></tr>
+<tr><td><a href="IList.html#VALto_empty">to_empty</a> [<a href="IList.html">IList</a>]</td>
+<td><div class="info">
+Make the list empty
+</div>
+</td></tr>
+<tr><td><a href="IList.html#VALto_list">to_list</a> [<a href="IList.html">IList</a>]</td>
+<td><div class="info">
+Render an iList to a list (uses <code class="code">List.rev</code> =&gt; <em>O(2n)</em>)
+</div>
+</td></tr>
+<tr><td><a href="IList.html#VALtransform">transform</a> [<a href="IList.html">IList</a>]</td>
+<td><div class="info">
+Iter and transform the list contents
+</div>
+</td></tr>
+</table><br>
+</body>
+</html>

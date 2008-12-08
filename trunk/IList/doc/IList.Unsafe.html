@@ -1,0 +1,27 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="next" href="IList.LIFO.html">
+<link rel="Up" href="IList.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="IList" rel="Chapter" href="IList.html"><title>IList.Unsafe</title>
+</head>
+<body>
+<div class="navbar">&nbsp;<a href="IList.html">Up</a>
+&nbsp;<a href="IList.LIFO.html">Next</a>
+</div>
+<center><h1>Module <a href="type_IList.Unsafe.html">IList.Unsafe</a></h1></center>
+<br>
+<pre><span class="keyword">module</span> Unsafe: <code class="code">sig</code> <a href="IList.Unsafe.html">..</a> <code class="code">end</code></pre>Unsafe functions (but which can be faster)<br>
+<hr width="100%">
+<pre><span class="keyword">val</span> <a name="VALconvert_to_list"></a>convert_to_list : <code class="type">'a <a href="IList.html#TYPEiList">IList.iList</a> -> 'a list</code></pre><div class="info">
+Convert to a classic list, and empty the original
+     (it uses <code class="code">Obj.magic</code> but it's <em>O(1)</em>)<br>
+</div>
+</body></html>
