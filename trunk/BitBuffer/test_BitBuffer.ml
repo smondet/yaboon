@@ -27,10 +27,9 @@
 
 To compile the test:
 
-You need the SimpleTestParser and the classic open_in camlp4 macros:
+You need the SimpleTestParser  camlp4 macro:
 
 TEST_PARSER=../SimpleTestParser/SimpleTestParser.cmo
-OPENIN_PARSER=/path/to/OpenInParser.cmo
 
 ocamlc -pp "camlp4o $TEST_PARSER " bitBuffer.mli bitBuffer.ml test_BitBuffer.ml
 
