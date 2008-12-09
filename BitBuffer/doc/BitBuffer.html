@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="Up" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="BitBuffer" rel="Chapter" href="BitBuffer.html"><link title="Quick Access Module" rel="Section" href="#3_QuickAccessModule">
+<link title="The basic types and exceptions " rel="Section" href="#3_Thebasictypesandexceptions">
+<link title="Basic Functions" rel="Section" href="#3_BasicFunctions">
+<title>BitBuffer</title>
+</head>
+<body>
+<div class="navbar">&nbsp;<a href="index.html">Up</a>
+&nbsp;</div>
+<center><h1>Module <a href="type_BitBuffer.html">BitBuffer</a></h1></center>
+<br>
+<pre><span class="keyword">module</span> BitBuffer: <code class="code">sig</code> <a href="BitBuffer.html">..</a> <code class="code">end</code></pre>This module implements a buffer (string) accessible with "bit" precision<br>
+<hr width="100%">
+<br>
+General features:<ul>
+<li>Each bit occupies one bit in memory</li>
+<li>Bound checking is "exception based" and if an exception other than <code class="code">(BitBuffer.Error _)</code> is raised, it means that you have found a bug</li>
+<li>Read/Write operations have been optimized for speed (by writing as much bytes "at once" as possible)</li>
+<li>Usage of <code class="code">Int64</code> operations has been minimized for <code class="code">write_int64</code> and <code class="code">read_int64</code></li>
+<li>No <code class="code">Obj.magic</code>, no <code class="code">==</code> and no <code class="code">!=</code></li>
+<li>Can be optimized with <code class="code">-unsafe</code> with same behaviour (all underlying string operations are based on <code class="code">s.[i] &lt;- '\x42'</code> and all tests succeed with <code class="code">-unsafe</code> compilation)</li>
+</ul>
+<br>
+<br>
+<a name="3_QuickAccessModule"></a>
+<h3>Quick Access Module</h3><br>
+<pre><span class="keyword">module</span> <a href="BitBuffer.Op.html">Op</a>: <code class="code">sig</code> <a href="BitBuffer.Op.html">..</a> <code class="code">end</code></pre><div class="info">
+A module that may be useful for <code class="code">open BitBuffer.Op in</code>
+</div>
+<br>
+<a name="3_Thebasictypesandexceptions"></a>
+<h3>The basic types and exceptions </h3><br>
+<pre><span class="keyword">type</span> <a name="TYPEbuffer"></a><code class="type"></code>buffer </pre>
+<div class="info">
+The binary buffer<br>
+</div>
+
+<pre><span class="keyword">type</span> <a name="TYPEerror"></a><code class="type"></code>error = <code class="type">[ `bit_index_out_of_bounds | `invalid_buffer_size | `invalid_int_size ]</code> </pre>
+<div class="info">
+The reasons of errors<br>
+</div>
+
+<pre><span class="keyword">val</span> <a name="VALstring_of_error"></a>string_of_error : <code class="type"><a href="BitBuffer.html#TYPEerror">error</a> -> string</code></pre><div class="info">
+String representing the <code class="code">error</code><br>
+</div>
+<pre><span class="keyword">exception</span> <a name="EXCEPTIONError"></a>Error <span class="keyword">of</span> <code class="type"><a href="BitBuffer.html#TYPEerror">error</a></code></pre>
+<div class="info">
+The exception raised when, for example, accessing the buffer out of its bounds<br>
+</div>
+<br>
+<a name="3_BasicFunctions"></a>
+<h3>Basic Functions</h3><br>
+<pre><span class="keyword">val</span> <a name="VALcreate"></a>create : <code class="type">?with_val:bool -> int -> <a href="BitBuffer.html#TYPEbuffer">buffer</a></code></pre><div class="info">
+Create a new buffer of a given length (in bits) filled with <code class="code">with_val</code> (default: 0/false)<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALcopy"></a>copy : <code class="type"><a href="BitBuffer.html#TYPEbuffer">buffer</a> -> <a href="BitBuffer.html#TYPEbuffer">buffer</a></code></pre><div class="info">
+Creates a fresh copy of a buffer<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALlength"></a>length : <code class="type"><a href="BitBuffer.html#TYPEbuffer">buffer</a> -> int</code></pre><div class="info">
+The number of bits in the buffer<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALunsafe_get_string"></a>unsafe_get_string : <code class="type"><a href="BitBuffer.html#TYPEbuffer">buffer</a> -> string</code></pre><div class="info">
+Get the underlying string (maybe not maintained in the future, if
+    implementation changes)<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALof_string"></a>of_string : <code class="type">string -> <a href="BitBuffer.html#TYPEbuffer">buffer</a></code></pre><div class="info">
+Make a buffer from a string (it's length will be <code class="code">8 * (String.length s)</code>)<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALis_byte_array"></a>is_byte_array : <code class="type"><a href="BitBuffer.html#TYPEbuffer">buffer</a> -> bool</code></pre><div class="info">
+Returns true if the buffer is a string (i.e. <code class="code">length mod 8 = 0</code>)<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALto_string"></a>to_string : <code class="type">?complete_with:bool -> <a href="BitBuffer.html#TYPEbuffer">buffer</a> -> string</code></pre><div class="info">
+Convert the buffer to a string, if the buffer length is not a
+multiple of 8 the string will be completed with <code class="code">complete_with</code> (default: 0)<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALget_bit"></a>get_bit : <code class="type"><a href="BitBuffer.html#TYPEbuffer">buffer</a> -> int -> bool</code></pre><div class="info">
+Get the i-th bit of the buffer<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALset_bit"></a>set_bit : <code class="type"><a href="BitBuffer.html#TYPEbuffer">buffer</a> -> int -> bool -> unit</code></pre><div class="info">
+Set the i-th bit of the buffer<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALwrite_byte"></a>write_byte : <code class="type"><a href="BitBuffer.html#TYPEbuffer">buffer</a> -> int -> char -> unit</code></pre><div class="info">
+Write a byte (8 bits) starting from a given position<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALwrite_int"></a>write_int : <code class="type"><a href="BitBuffer.html#TYPEbuffer">buffer</a> -> index:int -> size:int -> int -> unit</code></pre><div class="info">
+Write the <code class="code">size</code> lowest bits of the int, starting from <code class="code">index</code> 
+(example: in
+<code class="code">let b = of_string "\x00\x00" in write_int b ~index:3 ~size:7 0b101_1011</code>,
+<code class="code">b</code> will become: <code class="code">0b00010110_11000000</code>)<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALwrite_int64"></a>write_int64 : <code class="type"><a href="BitBuffer.html#TYPEbuffer">buffer</a> -> index:int -> size:int -> int64 -> unit</code></pre><div class="info">
+Same as <code class="code">write_int</code> but with an <code class="code">int64</code><br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALread_byte"></a>read_byte : <code class="type"><a href="BitBuffer.html#TYPEbuffer">buffer</a> -> int -> char</code></pre><div class="info">
+Read a byte (8 bits) from given index<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALread_int"></a>read_int : <code class="type"><a href="BitBuffer.html#TYPEbuffer">buffer</a> -> index:int -> size:int -> int</code></pre><div class="info">
+Read an integer of given <code class="code">size</code>, starting from <code class="code">index</code><br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALread_int64"></a>read_int64 : <code class="type"><a href="BitBuffer.html#TYPEbuffer">buffer</a> -> index:int -> size:int -> int64</code></pre><div class="info">
+Same as <code class="code">read_int</code> but with an <code class="code">int64</code><br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALwrite_buffer"></a>write_buffer : <code class="type">dst:<a href="BitBuffer.html#TYPEbuffer">buffer</a> -><br>       dst_index:int -> src:<a href="BitBuffer.html#TYPEbuffer">buffer</a> -> src_index:int -> size:int -> unit</code></pre><div class="info">
+<code class="code">write_buffer ~dst ~dst_index ~src ~src_index ~size</code> writes <code class="code">size</code> bits
+from <code class="code">src</code> starting at <code class="code">src_index</code> in buffer <code class="code">dst</code> starting at <code class="code">dst_index</code><br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALconcat"></a>concat : <code class="type">?size:int -> <a href="BitBuffer.html#TYPEbuffer">buffer</a> list -> <a href="BitBuffer.html#TYPEbuffer">buffer</a></code></pre><div class="info">
+Create a buffer from a buffer list,
+if <code class="code">size</code> is given then
+<code class="code">concat</code> creates a buffer of that size and write as much as possible (ending with zeros),
+if not <code class="code">concat</code> uses <code class="code">List.fold_left</code> to compute the exact size<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALappend"></a>append : <code class="type"><a href="BitBuffer.html#TYPEbuffer">buffer</a> -> <a href="BitBuffer.html#TYPEbuffer">buffer</a> -> unit</code></pre><div class="info">
+<code class="code">append b1 b2</code> appends b2 at the end of b1<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALsub"></a>sub : <code class="type"><a href="BitBuffer.html#TYPEbuffer">buffer</a> -> index:int -> size:int -> <a href="BitBuffer.html#TYPEbuffer">buffer</a></code></pre><div class="info">
+Creates a new buffer from a part of its operand (like <code class="code">String.sub</code>)<br>
+</div>
+</body></html>

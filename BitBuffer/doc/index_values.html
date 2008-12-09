@@ -1,0 +1,158 @@
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="BitBuffer" rel="Chapter" href="BitBuffer.html"><title>Index of values</title>
+</head>
+<body>
+<center><h1>Index of values</h1></center>
+<table>
+<tr><td align="left"><br>A</td></tr>
+<tr><td><a href="BitBuffer.html#VALappend">append</a> [<a href="BitBuffer.html">BitBuffer</a>]</td>
+<td><div class="info">
+<code class="code">append b1 b2</code> appends b2 at the end of b1
+</div>
+</td></tr>
+<tr><td align="left"><br>B</td></tr>
+<tr><td><a href="BitBuffer.Op.html#VALboi">boi</a> [<a href="BitBuffer.Op.html">BitBuffer.Op</a>]</td>
+<td><div class="info">
+bool of int (C-like convention)
+</div>
+</td></tr>
+<tr><td align="left"><br>C</td></tr>
+<tr><td><a href="BitBuffer.Op.html#VALcoi">coi</a> [<a href="BitBuffer.Op.html">BitBuffer.Op</a>]</td>
+<td><div class="info">
+char_of_int replication
+</div>
+</td></tr>
+<tr><td><a href="BitBuffer.html#VALconcat">concat</a> [<a href="BitBuffer.html">BitBuffer</a>]</td>
+<td><div class="info">
+Create a buffer from a buffer list,
+if <code class="code">size</code> is given then
+<code class="code">concat</code> creates a buffer of that size and write as much as possible (ending with zeros),
+if not <code class="code">concat</code> uses <code class="code">List.fold_left</code> to compute the exact size
+</div>
+</td></tr>
+<tr><td><a href="BitBuffer.html#VALcopy">copy</a> [<a href="BitBuffer.html">BitBuffer</a>]</td>
+<td><div class="info">
+Creates a fresh copy of a buffer
+</div>
+</td></tr>
+<tr><td><a href="BitBuffer.html#VALcreate">create</a> [<a href="BitBuffer.html">BitBuffer</a>]</td>
+<td><div class="info">
+Create a new buffer of a given length (in bits) filled with <code class="code">with_val</code> (default: 0/false)
+</div>
+</td></tr>
+<tr><td align="left"><br>G</td></tr>
+<tr><td><a href="BitBuffer.html#VALget_bit">get_bit</a> [<a href="BitBuffer.html">BitBuffer</a>]</td>
+<td><div class="info">
+Get the i-th bit of the buffer
+</div>
+</td></tr>
+<tr><td align="left"><br>I</td></tr>
+<tr><td><a href="BitBuffer.Op.html#VALiob">iob</a> [<a href="BitBuffer.Op.html">BitBuffer.Op</a>]</td>
+<td><div class="info">
+int of bool (0 of false, &lt;&gt; 0 of true, usually 1)
+</div>
+</td></tr>
+<tr><td><a href="BitBuffer.Op.html#VALioc">ioc</a> [<a href="BitBuffer.Op.html">BitBuffer.Op</a>]</td>
+<td><div class="info">
+int_of_char replication
+</div>
+</td></tr>
+<tr><td><a href="BitBuffer.html#VALis_byte_array">is_byte_array</a> [<a href="BitBuffer.html">BitBuffer</a>]</td>
+<td><div class="info">
+Returns true if the buffer is a string (i.e.
+</div>
+</td></tr>
+<tr><td align="left"><br>L</td></tr>
+<tr><td><a href="BitBuffer.html#VALlength">length</a> [<a href="BitBuffer.html">BitBuffer</a>]</td>
+<td><div class="info">
+The number of bits in the buffer
+</div>
+</td></tr>
+<tr><td align="left"><br>O</td></tr>
+<tr><td><a href="BitBuffer.html#VALof_string">of_string</a> [<a href="BitBuffer.html">BitBuffer</a>]</td>
+<td><div class="info">
+Make a buffer from a string (it's length will be <code class="code">8 * (String.length s)</code>)
+</div>
+</td></tr>
+<tr><td align="left"><br>R</td></tr>
+<tr><td><a href="BitBuffer.html#VALread_byte">read_byte</a> [<a href="BitBuffer.html">BitBuffer</a>]</td>
+<td><div class="info">
+Read a byte (8 bits) from given index
+</div>
+</td></tr>
+<tr><td><a href="BitBuffer.html#VALread_int">read_int</a> [<a href="BitBuffer.html">BitBuffer</a>]</td>
+<td><div class="info">
+Read an integer of given <code class="code">size</code>, starting from <code class="code">index</code>
+</div>
+</td></tr>
+<tr><td><a href="BitBuffer.html#VALread_int64">read_int64</a> [<a href="BitBuffer.html">BitBuffer</a>]</td>
+<td><div class="info">
+Same as <code class="code">read_int</code> but with an <code class="code">int64</code>
+</div>
+</td></tr>
+<tr><td align="left"><br>S</td></tr>
+<tr><td><a href="BitBuffer.html#VALset_bit">set_bit</a> [<a href="BitBuffer.html">BitBuffer</a>]</td>
+<td><div class="info">
+Set the i-th bit of the buffer
+</div>
+</td></tr>
+<tr><td><a href="BitBuffer.html#VALstring_of_error">string_of_error</a> [<a href="BitBuffer.html">BitBuffer</a>]</td>
+<td><div class="info">
+String representing the <code class="code">error</code>
+</div>
+</td></tr>
+<tr><td><a href="BitBuffer.html#VALsub">sub</a> [<a href="BitBuffer.html">BitBuffer</a>]</td>
+<td><div class="info">
+Creates a new buffer from a part of its operand (like <code class="code">String.sub</code>)
+</div>
+</td></tr>
+<tr><td align="left"><br>T</td></tr>
+<tr><td><a href="BitBuffer.html#VALto_string">to_string</a> [<a href="BitBuffer.html">BitBuffer</a>]</td>
+<td><div class="info">
+Convert the buffer to a string, if the buffer length is not a
+multiple of 8 the string will be completed with <code class="code">complete_with</code> (default: 0)
+</div>
+</td></tr>
+<tr><td align="left"><br>U</td></tr>
+<tr><td><a href="BitBuffer.html#VALunsafe_get_string">unsafe_get_string</a> [<a href="BitBuffer.html">BitBuffer</a>]</td>
+<td><div class="info">
+Get the underlying string (maybe not maintained in the future, if
+    implementation changes)
+</div>
+</td></tr>
+<tr><td align="left"><br>W</td></tr>
+<tr><td><a href="BitBuffer.html#VALwrite_buffer">write_buffer</a> [<a href="BitBuffer.html">BitBuffer</a>]</td>
+<td><div class="info">
+<code class="code">write_buffer ~dst ~dst_index ~src ~src_index ~size</code> writes <code class="code">size</code> bits
+from <code class="code">src</code> starting at <code class="code">src_index</code> in buffer <code class="code">dst</code> starting at <code class="code">dst_index</code>
+</div>
+</td></tr>
+<tr><td><a href="BitBuffer.html#VALwrite_byte">write_byte</a> [<a href="BitBuffer.html">BitBuffer</a>]</td>
+<td><div class="info">
+Write a byte (8 bits) starting from a given position
+</div>
+</td></tr>
+<tr><td><a href="BitBuffer.html#VALwrite_int">write_int</a> [<a href="BitBuffer.html">BitBuffer</a>]</td>
+<td><div class="info">
+Write the <code class="code">size</code> lowest bits of the int, starting from <code class="code">index</code> 
+(example: in
+<code class="code">let b = of_string "\x00\x00" in write_int b ~index:3 ~size:7 0b101_1011</code>,
+<code class="code">b</code> will become: <code class="code">0b00010110_11000000</code>)
+</div>
+</td></tr>
+<tr><td><a href="BitBuffer.html#VALwrite_int64">write_int64</a> [<a href="BitBuffer.html">BitBuffer</a>]</td>
+<td><div class="info">
+Same as <code class="code">write_int</code> but with an <code class="code">int64</code>
+</div>
+</td></tr>
+</table><br>
+</body>
+</html>

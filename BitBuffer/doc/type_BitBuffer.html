@@ -1,0 +1,48 @@
+<html><head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="BitBuffer" rel="Chapter" href="BitBuffer.html"><title>BitBuffer</title>
+</head>
+<body>
+<code class="code"><span class="keyword">sig</span><br>
+&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">Op</span>&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;ioc&nbsp;:&nbsp;char&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;coi&nbsp;:&nbsp;int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;char<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;iob&nbsp;:&nbsp;bool&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;boi&nbsp;:&nbsp;int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;buffer<br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;error&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;<span class="keywordsign">`</span>bit_index_out_of_bounds&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span>invalid_buffer_size&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span>invalid_int_size&nbsp;]<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;string_of_error&nbsp;:&nbsp;<span class="constructor">BitBuffer</span>.error&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string<br>
+&nbsp;&nbsp;<span class="keyword">exception</span>&nbsp;<span class="constructor">Error</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">BitBuffer</span>.error<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;create&nbsp;:&nbsp;?with_val:bool&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">BitBuffer</span>.buffer<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;copy&nbsp;:&nbsp;<span class="constructor">BitBuffer</span>.buffer&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">BitBuffer</span>.buffer<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;length&nbsp;:&nbsp;<span class="constructor">BitBuffer</span>.buffer&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;int<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;unsafe_get_string&nbsp;:&nbsp;<span class="constructor">BitBuffer</span>.buffer&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;of_string&nbsp;:&nbsp;string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">BitBuffer</span>.buffer<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;is_byte_array&nbsp;:&nbsp;<span class="constructor">BitBuffer</span>.buffer&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;to_string&nbsp;:&nbsp;?complete_with:bool&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">BitBuffer</span>.buffer&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;get_bit&nbsp;:&nbsp;<span class="constructor">BitBuffer</span>.buffer&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;set_bit&nbsp;:&nbsp;<span class="constructor">BitBuffer</span>.buffer&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;write_byte&nbsp;:&nbsp;<span class="constructor">BitBuffer</span>.buffer&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;char&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;write_int&nbsp;:&nbsp;<span class="constructor">BitBuffer</span>.buffer&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;index:int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;size:int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;write_int64&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">BitBuffer</span>.buffer&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;index:int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;size:int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;int64&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;read_byte&nbsp;:&nbsp;<span class="constructor">BitBuffer</span>.buffer&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;char<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;read_int&nbsp;:&nbsp;<span class="constructor">BitBuffer</span>.buffer&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;index:int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;size:int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;int<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;read_int64&nbsp;:&nbsp;<span class="constructor">BitBuffer</span>.buffer&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;index:int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;size:int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;int64<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;write_buffer&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dst:<span class="constructor">BitBuffer</span>.buffer&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;dst_index:int&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;src:<span class="constructor">BitBuffer</span>.buffer&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;src_index:int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;size:int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;concat&nbsp;:&nbsp;?size:int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">BitBuffer</span>.buffer&nbsp;list&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">BitBuffer</span>.buffer<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;append&nbsp;:&nbsp;<span class="constructor">BitBuffer</span>.buffer&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">BitBuffer</span>.buffer&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;sub&nbsp;:&nbsp;<span class="constructor">BitBuffer</span>.buffer&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;index:int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;size:int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">BitBuffer</span>.buffer<br>
+<span class="keyword">end</span></code></body></html>
