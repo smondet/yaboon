@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="Up" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Unsafix" rel="Chapter" href="Unsafix.html"><link title="Sockets" rel="Section" href="#3_Sockets">
+<link title="Nanosleep" rel="Section" href="#3_Nanosleep">
+<link title="Errno" rel="Section" href="#3_Errno">
+<title>Unsafix</title>
+</head>
+<body>
+<div class="navbar">&nbsp;<a href="index.html">Up</a>
+&nbsp;</div>
+<center><h1>Module <a href="type_Unsafix.html">Unsafix</a></h1></center>
+<br>
+<pre><span class="keyword">module</span> Unsafix: <code class="code">sig</code> <a href="Unsafix.html">..</a> <code class="code">end</code></pre>Access to unsafe and non-portable features of Unix<br>
+<hr width="100%">
+<br>
+<a name="3_Sockets"></a>
+<h3>Sockets</h3><br>
+<pre><span class="keyword">val</span> <a name="VALsocket"></a><a href="code_VALUnsafix.socket.html">socket</a> : <code class="type">domain:int -> sock_type:int -> protocol:int -> Unix.file_descr</code></pre><div class="info">
+The socket creation (no verification: can return an invalid file descriptor)<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALsocket_opt"></a><a href="code_VALUnsafix.socket_opt.html">socket_opt</a> : <code class="type">domain:int -> sock_type:int -> protocol:int -> Unix.file_descr option</code></pre><div class="info">
+Same as <code class="code">socket</code> but returns <code class="code">None</code> if call failed<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALsetsockopt_int"></a><a href="code_VALUnsafix.setsockopt_int.html">setsockopt_int</a> : <code class="type">Unix.file_descr -> level:int -> optname:int -> optval:int -> int</code></pre><div class="info">
+Set a socket option of type <code class="code">int</code><br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALgetsockopt_int"></a><a href="code_VALUnsafix.getsockopt_int.html">getsockopt_int</a> : <code class="type">Unix.file_descr -> level:int -> optname:int -> int</code></pre><div class="info">
+Get a socket option of type <code class="code">int</code><br>
+</div>
+<pre><span class="keyword">type</span> <a name="TYPEstring_sockopt"></a><code class="type"></code>string_sockopt = <code class="type">[ `error of int | `ok of string | `optlength_overflow ]</code> </pre>
+<div class="info">
+The return type of <code class="code">getsockopt_str</code><br>
+</div>
+
+<pre><span class="keyword">val</span> <a name="VALgetsockopt_str"></a><a href="code_VALUnsafix.getsockopt_str.html">getsockopt_str</a> : <code class="type">Unix.file_descr -><br>       level:int -> optname:int -> optlength:int -> <a href="Unsafix.html#TYPEstring_sockopt">string_sockopt</a></code></pre><div class="info">
+Retrieve a socket option of variable length as a <code class="code">string</code><br>
+</div>
+<br>
+<a name="3_Nanosleep"></a>
+<h3>Nanosleep</h3><br>
+<pre><span class="keyword">type</span> <a name="TYPEnanosleep_status"></a><code class="type"></code>nanosleep_status = <code class="type">[ `error_EFAULT | `error_EINVAL | `interrupted of int * int | `ok ]</code> </pre>
+<div class="info">
+Return type of <code class="code">nanosleep</code> and <code class="code">nanosleep_float</code><br>
+</div>
+
+<pre><span class="keyword">val</span> <a name="VALnanosleep"></a><a href="code_VALUnsafix.nanosleep.html">nanosleep</a> : <code class="type">int -> int -> <a href="Unsafix.html#TYPEnanosleep_status">nanosleep_status</a></code></pre><div class="info">
+High resolution <code class="code">sleep</code>. Call <code class="code">nanosleep seconds nanoseconds</code>, if the call
+is interrupted (e.g. by a signal), it will return <code class="code">`interrupted (secs,nanos)</code>
+with the remaining time.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALnanosleep_float"></a><a href="code_VALUnsafix.nanosleep_float.html">nanosleep_float</a> : <code class="type">float -> <a href="Unsafix.html#TYPEnanosleep_status">nanosleep_status</a></code></pre><div class="info">
+Same as <code class="code">nanosleep</code> but with a <code class="code">float</code> argument<br>
+</div>
+<br>
+<a name="3_Errno"></a>
+<h3>Errno</h3><br>
+<pre><span class="keyword">val</span> <a name="VALcurrent_errno"></a><a href="code_VALUnsafix.current_errno.html">current_errno</a> : <code class="type">unit -> Unix.error</code></pre><div class="info">
+Get the current value of the unix global variable <code class="code">errno</code><br>
+</div>
+</body></html>

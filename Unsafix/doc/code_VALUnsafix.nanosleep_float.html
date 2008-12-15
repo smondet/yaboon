@@ -1,0 +1,14 @@
+<html><head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Unsafix" rel="Chapter" href="Unsafix.html"><title>Unsafix.nanosleep_float</title>
+</head>
+<body>
+<code class="code"><span class="keyword">let</span>&nbsp;nanosleep_float&nbsp;f&nbsp;=&nbsp;(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;s,&nbsp;ns&nbsp;=&nbsp;int_of_float&nbsp;f,&nbsp;int_of_float&nbsp;((f&nbsp;-.&nbsp;(floor&nbsp;f))&nbsp;*.&nbsp;10e8)&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;(nanosleep&nbsp;s&nbsp;ns)<br>
+)</code></body></html>
