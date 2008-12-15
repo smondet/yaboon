@@ -1,0 +1,53 @@
+
+
+.PHONY: all install clean bintar
+
+
+USE_OCAMLFIND = true
+OCAMLPACKS[] =
+    unix
+
+if $(not $(OCAMLFIND_EXISTS))
+   eprintln(This project requires ocamlfind, but is was not found.)
+   eprintln(You need to install ocamlfind and run "omake --configure".)
+   exit 1
+
+NATIVE_ENABLED = true
+BYTE_ENABLED = true
+
+OCAMLFLAGS    +=
+OCAMLCFLAGS   +=
+OCAMLOPTFLAGS +=
+OCAML_LINK_FLAGS +=
+OCAML_BYTE_LINK_FLAGS +=
+OCAML_NATIVE_LINK_FLAGS +=
+
+clean:
+    rm -rf build/ *.omc
+
+if $(or $(not $(file-exists build/)), $(not $(file-exists build/lib)))
+	   #$(not $(file-exists build/test)))
+    mkdir -p build/lib build/test
+vmount(-l, src/, build/lib)
+vmount(-l, test/, build/test)
+
+
+IN_THE_BINTAR= build/lib/unsafix.cmi build/lib/unsafix.cma build/lib/unsafix.cmxa build/lib/unsafix.a build/lib/libunsafix.a
+
+ARCH=$(match $(MACHINE), .[0-9]86, x86, .*, $(MACHINE))
+BINTAR_DIR=unsafix_$(SYSNAME)_$(ARCH)
+BINTAR_NAME=unsafix_$(SYSNAME)_$(ARCH)
+
+bintar: $(IN_THE_BINTAR)
+    mkdir -p $(BINTAR_DIR)
+    cp $(IN_THE_BINTAR) $(BINTAR_DIR)
+    tar cfv $(BINTAR_NAME).tar $(BINTAR_DIR)
+    #rm -rf $(BINTAR_DIR)
+
+
+.SUBDIRS: build
+  .SUBDIRS: lib
+  .SUBDIRS: test
+
+
+

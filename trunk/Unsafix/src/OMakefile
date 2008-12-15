@@ -1,0 +1,17 @@
+LIB_NAME = unsafix
+
+
+unsafix_calls.o: unsafix_calls.c
+    gcc  -I $(shell ocamlc -where) \
+        -ansi -pedantic -Wall -Wextra -Wpointer-arith -Wbad-function-cast \
+        -c unsafix_calls.c 
+
+$(LIB_NAME).cmxa: unsafix_calls.o unsafix.cmx
+    ocamlmklib -custom -I . unsafix_calls.o unsafix.cmx -o $(LIB_NAME)
+
+$(LIB_NAME).cma: unsafix_calls.o unsafix.cmo
+    ocamlmklib -custom -I . unsafix_calls.o unsafix.cmo -o $(LIB_NAME)
+
+.DEFAULT: $(LIB_NAME).cmxa $(LIB_NAME).cma
+
+

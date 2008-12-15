@@ -1,0 +1,91 @@
+#! /bin/sh
+
+
+do_prepro()
+{
+    H_FILE=$1
+    SHARP_DEF=$2
+    TMP=/tmp/do_prepro_$$.c
+    if [ -f $H_FILE ]; then
+        cat << EOF > $TMP
+#include "$H_FILE"
+#include <stdio.h>
+int main() {
+printf("let d_$SHARP_DEF = %d\n", $SHARP_DEF);
+return 0;}
+EOF
+    else
+        echo "Can't find $H_FILE"
+    fi
+    cc $TMP -o $TMP.out
+    echo ""
+    echo "(* $SHARP_DEF in $H_FILE *)"
+    $TMP.out | grep "d_$SHARP_DEF"
+#
+# Can't use only the preprocessor:
+#  - don't know exactly how it's handled in gcc/linux but there are
+#    many reccursive definitions which are not expanded directly (???)
+#  - it occurs with all IPROTO_* or SOCK_*
+#
+}
+
+find_dot_h()
+{
+    ROOT_DIR=$1
+    PATTERN=$2
+    #echo  "#define $PATTERN"
+    find $ROOT_DIR -name "*.h" | xargs egrep "#define $2" | \
+        sed -e 's/#define //' | sed -e 's/[ \t].*//' 
+        #awk -F":" '{ print "("$1")["$2"]" }'
+}
+
+PF_STAR=`find_dot_h /usr/include PF_*`
+IPROTO_STAR=`find_dot_h /usr/include IPPROTO_*`
+
+CLASSICAL_PATTERNS="PF_.* IPPROTO_.* SOCK_.* TCP_.*"
+#CLASSICAL_PATTERNS=" SOCK_.*"
+CLASSICAL_PATHS="/usr/include/"
+do_classical_search()
+{
+    RESULT=""
+    for pattern in $CLASSICAL_PATTERNS; do
+        for path in $CLASSICAL_PATHS; do
+            echo "$path --> $pattern"
+            RESULT="$RESULT $(find_dot_h $path $pattern)"
+        done;
+    done
+    for pathdefine in $RESULT; do
+        corrected_path=`echo ${pathdefine%:*} | sed -e 's/bits/sys/'`
+        do_prepro ${corrected_path} ${pathdefine#*:}
+    done
+
+}
+
+usage()
+{
+    echo "usage: $0 [ -classic |  <path> <pattern> ]"
+}
+
+if [ $# -eq 0 ]; then
+    usage
+    return
+fi
+if [ $# -eq 1 ]; then
+    if [ "$1" = "-classic" ]; then
+        do_classical_search
+    else
+        usage
+    fi
+    return
+fi
+if [ $# -eq 2 ]; then
+    path=$1
+    pattern=$2
+    res=""
+    res="$res $(find_dot_h $path $pattern)"
+    for pathdefine in $res; do
+        corrected_path=`echo ${pathdefine%:*} | sed -e 's/bits/sys/'`
+        do_prepro ${corrected_path} ${pathdefine#*:}
+    done
+fi
+
