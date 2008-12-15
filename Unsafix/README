@@ -1,0 +1,8 @@
+
+UnsafiX provides unsafe and non-portable features to OCaml's unix library...
+
+With Unsafix you can for example access special options of linux or *BSD
+network stacks such as DCCP sockets.
+
+
+To compile and test just try `omake'
