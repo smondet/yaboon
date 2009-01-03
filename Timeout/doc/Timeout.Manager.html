@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="next" href="Timeout.Container.html">
+<link rel="Up" href="Timeout.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Timeout" rel="Chapter" href="Timeout.html"><title>Timeout.Manager</title>
+</head>
+<body>
+<div class="navbar">&nbsp;<a href="Timeout.html">Up</a>
+&nbsp;<a href="Timeout.Container.html">Next</a>
+</div>
+<center><h1>Module <a href="type_Timeout.Manager.html">Timeout.Manager</a></h1></center>
+<br>
+<pre><span class="keyword">module</span> Manager: <code class="code">sig</code> <a href="Timeout.Manager.html">..</a> <code class="code">end</code></pre><hr width="100%">
+<pre><span class="keyword">type</span> <a name="TYPEt_fd"></a><code class="type"></code>t_fd </pre>
+<div class="info">
+timeout descriptors<br>
+</div>
+
+<pre><span class="keyword">type</span> <a name="TYPEt_val"></a><code class="type"></code>t_val = <code class="type">float</code> </pre>
+<div class="info">
+timeout values in seconds<br>
+</div>
+
+<pre><span class="keyword">type</span> <a name="TYPEt"></a><code class="type"></code>t </pre>
+<div class="info">
+type of a timeout manager<br>
+</div>
+
+<pre><span class="keyword">type</span> <a name="TYPEt_in_sig_handler"></a><code class="type"></code>t_in_sig_handler </pre>
+<div class="info">
+type of a timeout manager inside the sig handler.
+      The data necessary to handle timeouts, i.e their creation, deletion, 
+	is mutexed so that if a modification is interrupted by a sig handler, 
+	the sig handler could not modify (an exception is raised if so) and make it incoherent. 
+	Therefore there are two different views of the managers, 
+	one in the normal schedule, the other one during the sig handler, 
+	and each one asserts the coherence of the timeouts data.<br>
+</div>
+
+<pre><span class="keyword">exception</span> <a name="EXCEPTIONToo_fast"></a>Too_fast</pre>
+<div class="info">
+exception raised if the sig handler is called during a 
+      timeout creation or cancellation<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALgranularity"></a>granularity : <code class="type">float</code></pre><div class="info">
+the granularity of the timeouts in seconds<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALcreate"></a>create : <code class="type">unit -> <a href="Timeout.Manager.html#TYPEt">t</a></code></pre><div class="info">
+<b>Returns</b> a timeout manager<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALcreate_timeout"></a>create_timeout : <code class="type"><a href="Timeout.Manager.html#TYPEt">t</a> -> <a href="Timeout.Manager.html#TYPEt_val">t_val</a> -> <a href="Timeout.Manager.html#TYPEt_fd">t_fd</a></code></pre><div class="info">
+<b>Returns</b> a new timeout descriptor that will expire in t_val seconds<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALcancel_timeout"></a>cancel_timeout : <code class="type"><a href="Timeout.Manager.html#TYPEt">t</a> -> <a href="Timeout.Manager.html#TYPEt_fd">t_fd</a> -> unit</code></pre><div class="info">
+cancels the timeout t_fd.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALcreate_timeout_when_handling_to"></a>create_timeout_when_handling_to : <code class="type"><a href="Timeout.Manager.html#TYPEt_in_sig_handler">t_in_sig_handler</a> -><br>       <a href="Timeout.Manager.html#TYPEt_val">t_val</a> -> <a href="Timeout.Manager.html#TYPEt_fd">t_fd</a></code></pre><div class="info">
+creates a timeout in a sig handler.<br>
+<b>Returns</b> a timeout descriptor<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALcancel_timeout_when_handling_to"></a>cancel_timeout_when_handling_to : <code class="type"><a href="Timeout.Manager.html#TYPEt_in_sig_handler">t_in_sig_handler</a> -> <a href="Timeout.Manager.html#TYPEt_fd">t_fd</a> -> unit</code></pre><div class="info">
+as for create timeout but for cancelling<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALt_in_sig_equal"></a>t_in_sig_equal : <code class="type"><a href="Timeout.Manager.html#TYPEt_in_sig_handler">t_in_sig_handler</a> -> <a href="Timeout.Manager.html#TYPEt_in_sig_handler">t_in_sig_handler</a> -> bool</code></pre><div class="info">
+<b>Returns</b> the boolean the two managers are the same<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALare_the_same"></a>are_the_same : <code class="type"><a href="Timeout.Manager.html#TYPEt">t</a> -> <a href="Timeout.Manager.html#TYPEt_in_sig_handler">t_in_sig_handler</a> -> bool</code></pre><div class="info">
+<b>Returns</b> the boolean the two views of the timeout manager are the same<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALset_handler"></a>set_handler : <code class="type"><a href="Timeout.Manager.html#TYPEt">t</a> -><br>       (<a href="Timeout.Manager.html#TYPEt_in_sig_handler">t_in_sig_handler</a> -> <a href="Timeout.Manager.html#TYPEt_fd">t_fd</a> -> unit) -> unit</code></pre><div class="info">
+set_handler t f, sets f as the handler that will be called by the signal handler.
+      the handler has two parameters: <ul>
+<li>t_in_sig_handler: the sig handler view of the timeout manager that triggered the timeout.</li>
+<li>t_fd: the timeout descriptor that triggered the timeout.</li>
+</ul>
+<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALstop_everything"></a>stop_everything : <code class="type"><a href="Timeout.Manager.html#TYPEt">t</a> -> unit</code></pre><div class="info">
+cancels all the timeouts and stops the Unix.ITIMER_REAL timer<br>
+</div>
+</body></html>
